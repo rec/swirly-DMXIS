@@ -1,0 +1,63 @@
+Mode
+B,0,9,Off
+S,10,19,Chase 1
+S,20,29,Chase 2
+S,30,39,Chase 3
+S,40,49,Chase 4
+S,50,59,Chase 5
+S,60,69,Chase 6
+S,70,79,Chase 7
+S,80,89,Chase 8
+S,90,99,Chase 9
+S,100,109,Chase 10
+S,110,119,Chase 11
+S,120,129,Chase 12
+S,130,139,Chase 13
+S,140,149,Chase 14
+S,150,159,Chase 15
+S,160,169,Chase 16
+S,170,179,Chase 17
+V,180,249,Strobing
+S,250,255,On
+Pinspot 1
+B,0,9,Off
+S,10,49,Red
+S,10,49,Green
+S,50,89,Blue
+S,90,129,Yellow
+S,130,169,Purple
+S,170,209,Cyan
+S,210,255,White
+Red
+V,0,255,
+Pinspot 2
+B,0,9,Off
+S,10,49,Red
+S,10,49,Green
+S,50,89,Blue
+S,90,129,Yellow
+S,130,169,Purple
+S,170,209,Cyan
+S,210,255,White
+Green
+V,0,255,
+Pinspot 3
+B,0,9,Off
+S,10,49,Red
+S,10,49,Green
+S,50,89,Blue
+S,90,129,Yellow
+S,130,169,Purple
+S,170,209,Cyan
+S,210,255,White
+Blue
+V,0,255,
+Pinspot 4
+B,0,9,Off
+S,10,49,Red
+S,10,49,Green
+S,50,89,Blue
+S,90,129,Yellow
+S,130,169,Purple
+S,170,209,Cyan
+S,210,255,White
