@@ -1,4 +1,8 @@
+#!/usr/local/bin/python
+
 import json
+import os.path
+import sys
 import xml.dom.minidom
 
 import defaults
@@ -43,7 +47,12 @@ def MakePreset(data, output):
   Print(root, output)
 
 if __name__ == '__main__':
-  with open('sample.json') as input:
-    data = json.load(input)
-    with open('sample.xml', 'w') as output:
-      MakePreset(data, output)
+  if len(sys.argv) is 2:
+    with open(sys.argv[1]) as input:
+      data = json.load(input)
+      with open('sample.xml', 'w') as output:
+        MakePreset(data, output)
+
+  else:
+    print 'Usage: %s json-filename' % sys.argv[0]
+    sys.exit(-1)
