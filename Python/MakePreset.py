@@ -36,8 +36,8 @@ def Add(document, names, data, tag, parent, nameField):
     attributes = defaults.GetDefault(tag, {nameField: name}, d)
     CreateElement(document, parent, tag, attributes)
 
-def MakePreset(data, output):
-  d = defaults.GetDefault('DbAudiowarePreset', dict(name=data['name']), {})
+def MakePreset(name, data, output):
+  d = defaults.GetDefault('DbAudiowarePreset', dict(name=name), {})
   document = CreateDocument('DbAudiowarePreset', d)
   root = document.documentElement
   params = CreateElement(document, root, 'Params')
@@ -52,8 +52,9 @@ if __name__ == '__main__':
   if len(sys.argv) is 2:
     with open(sys.argv[1]) as input:
       data = json.load(input)
-      with open('sample.xml', 'w') as output:
-        MakePreset(data, output)
+      for name, subdata in data.iteritems():
+        with open(name + '.xml', 'w') as output:
+          MakePreset(name, subdata, output)
 
   else:
     print 'Usage: %s json-filename' % sys.argv[0]
