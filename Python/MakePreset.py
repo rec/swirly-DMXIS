@@ -1,12 +1,12 @@
 #!/usr/local/bin/python
 
-import collections
 import json
 import os.path
 import sys
 import xml.dom.minidom
 
 import defaults
+import OrderedDict
 
 def SetNodeValue(node, kwds):
   for k, v in kwds.iteritems():
@@ -34,7 +34,7 @@ def Add(document, names, data, tag, parent, nameField):
   for name in names:
     if name not in omit:
       d = sub.get(name, {})
-      d = collections.OrderedDict((str(k), v) for k, v in d.iteritems())
+      d = OrderedDict.OrderedDict((str(k), v) for k, v in d.iteritems())
       attributes = defaults.GetDefault(tag, {nameField: name}, d)
       CreateElement(document, parent, tag, attributes)
 
