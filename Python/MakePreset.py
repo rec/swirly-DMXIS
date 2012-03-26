@@ -29,8 +29,8 @@ def Print(document, output):
   output.write(document.toprettyxml(indent='  '))
 
 def Add(document, names, data, tag, parent, nameField):
-  sub = data[tag]
-  omit = set(sub["OMIT"])
+  sub = data.get(tag, {})
+  omit = set(sub.get("OMIT", []))
   for name in names:
     if name not in omit:
       d = sub.get(name, {})
