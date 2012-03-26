@@ -1,39 +1,48 @@
 import json
-import xml.etree.ElementTree as ElementTree
+import xml.dom.minidom
 
 import defaults
 
-USE_ETREE = True
+def SetNodeValue(node, **kwds):
+  for k, v in kwds.iteritems():
+    node.setAttribute(k, v)
 
-if USE_ETREE:
-  def CreateRootElement(tag, **attributes):
-    return ElementTree.Element(tag, attributes)
+def CreateDocument(tag, **attributes):
+  impl = xml.dom.minidom.getDOMImplementation()
+  document = impl.createDocument(None, tag, None)
+  SetNodeValue(document.documentElement, **attributes)
+  return document
 
-  def CreateElement(parent, tag, **attributes):
-    return ElementTree.SubElement(parent, tag, attributes)
+def CreateElement(document, parent, tag, **attributes):
+  element = document.createElement(tag)
+  SetNodeValue(element, **attributes)
+  parent.appendChild(element)
+  return element
 
-  def Print(root, output):
-    ElementTree.ElementTree(root).write(output)
+
+def Print(document, output):
+  output.write(document.toprettyxml(indent='  '))
 
 
-def Add(names, data, tag, parent, nameField):
+def Add(document, names, data, tag, parent, nameField):
   sub = data[tag]
   for name in names:
     d = dict(sub.get(name, {}))
     d[nameField] = name
     d = dict((str(k), v) for k, v in d.iteritems())
-    CreateElement(parent, tag, **defaults.Get(tag, **d))
+    CreateElement(document, parent, tag, **defaults.Get(tag, **d))
 
 
 def MakePreset(input, output):
   data = json.load(input)
   d = defaults.Get('DbAudiowarePreset', name=data['name'])
-  root = CreateRootElement('DbAudiowarePreset', **d)
-  params = CreateElement(root, 'Params')
-  dmx = CreateElement(root, 'DmxUniverse')
+  document = CreateDocument('DbAudiowarePreset', **d)
+  root = document.documentElement
+  params = CreateElement(document, root, 'Params')
+  dmx = CreateElement(document, root, 'DmxUniverse')
 
-  Add(defaults.PARAM_NAMES, data, 'Param', params, 'nm')
-  Add(defaults.DMX_NAMES, data, 'c', dmx, 'n')
+  Add(document, defaults.PARAM_NAMES, data, 'Param', params, 'nm')
+  Add(document, defaults.DMX_NAMES, data, 'c', dmx, 'n')
 
   Print(root, output)
 
