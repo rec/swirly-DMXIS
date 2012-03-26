@@ -56,8 +56,3 @@ def processor(data):
     return f
 
   return decorator
-
-
-@processor
-def perturbDMX(level, data):
-

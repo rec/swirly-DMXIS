@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<DbAudiowarePreset name="Preset 1">
+    <Params>
+        <Param nm="Bank" v="0.022500" />
+        <Param nm="Preset" v="0.002500" />
+        <Param nm="4" v="0.445000" cc="-76" nrpn="-1" ch="0" />
+        <Param nm="5" v="0.000000" cc="108" nrpn="-1" ch="0" />
+        <Param nm="9" v="0.000000" cc="108" nrpn="-1" ch="0" />
+        <Param nm="17" v="0.000000" cc="5" nrpn="-1" ch="0" />
+    </Params>
+    <DmxUniverse/>
+</DbAudiowarePreset>
