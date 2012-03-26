@@ -19,10 +19,8 @@ def CreateElement(document, parent, tag, **attributes):
   parent.appendChild(element)
   return element
 
-
 def Print(document, output):
   output.write(document.toprettyxml(indent='  '))
-
 
 def Add(document, names, data, tag, parent, nameField):
   sub = data[tag]
@@ -32,9 +30,7 @@ def Add(document, names, data, tag, parent, nameField):
     d = dict((str(k), v) for k, v in d.iteritems())
     CreateElement(document, parent, tag, **defaults.Get(tag, **d))
 
-
-def MakePreset(input, output):
-  data = json.load(input)
+def MakePreset(data, output):
   d = defaults.Get('DbAudiowarePreset', name=data['name'])
   document = CreateDocument('DbAudiowarePreset', **d)
   root = document.documentElement
@@ -46,7 +42,8 @@ def MakePreset(input, output):
 
   Print(root, output)
 
-
-with open('sample.json') as input:
-  with open('sample.xml', 'w') as output:
-    MakePreset(input, output)
+if __name__ == '__main__':
+  with open('sample.json') as input:
+    data = json.load(input)
+    with open('sample.xml', 'w') as output:
+      MakePreset(data, output)
