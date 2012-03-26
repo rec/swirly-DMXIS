@@ -30,11 +30,13 @@ def Print(document, output):
 
 def Add(document, names, data, tag, parent, nameField):
   sub = data[tag]
+  omit = set(sub["OMIT"])
   for name in names:
-    d = sub.get(name, {})
-    d = collections.OrderedDict((str(k), v) for k, v in d.iteritems())
-    attributes = defaults.GetDefault(tag, {nameField: name}, d)
-    CreateElement(document, parent, tag, attributes)
+    if name not in omit:
+      d = sub.get(name, {})
+      d = collections.OrderedDict((str(k), v) for k, v in d.iteritems())
+      attributes = defaults.GetDefault(tag, {nameField: name}, d)
+      CreateElement(document, parent, tag, attributes)
 
 def MakePreset(name, data, output):
   d = defaults.GetDefault('DbAudiowarePreset', dict(name=name), {})
