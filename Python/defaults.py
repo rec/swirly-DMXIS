@@ -47,7 +47,7 @@ PARAM_SECOND = [
 
 PARAM_NAMES = PARAM_FIRST + DMX_NAMES + PARAM_SECOND
 
-def Get(name, primary, secondary):
+def GetDefault(name, primary, secondary):
   d = collections.OrderedDict(primary)
   d.update(PRESET_PARTS[name])
   d.update(secondary)

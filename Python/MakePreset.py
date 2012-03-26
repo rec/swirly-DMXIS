@@ -10,6 +10,7 @@ import defaults
 
 def SetNodeValue(node, kwds):
   for k, v in kwds.iteritems():
+    # STUPID xml.dom.minidom sorts the attributes when it gets them.  :-(
     node.setAttribute(k, v)
 
 def CreateDocument(tag, attributes):
@@ -32,11 +33,11 @@ def Add(document, names, data, tag, parent, nameField):
   for name in names:
     d = sub.get(name, {})
     d = collections.OrderedDict((str(k), v) for k, v in d.iteritems())
-    attributes = defaults.Get(tag, {nameField:name}, d)
+    attributes = defaults.GetDefault(tag, {nameField: name}, d)
     CreateElement(document, parent, tag, attributes)
 
 def MakePreset(data, output):
-  d = defaults.Get('DbAudiowarePreset', dict(name=data['name']), {})
+  d = defaults.GetDefault('DbAudiowarePreset', dict(name=data['name']), {})
   document = CreateDocument('DbAudiowarePreset', d)
   root = document.documentElement
   params = CreateElement(document, root, 'Params')
