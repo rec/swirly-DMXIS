@@ -1,32 +1,36 @@
+#!/usr/local/bin/python
+
+import OrderedDict
+
 PRESET_PARTS = {
-  "DbAudiowarePreset": {
-    "product": "DMXIS",
-    "major": "1",
-    "minor": "2",
-    "patch": "0",
-    "algoname": "DMXIS",
-  },
+  "DbAudiowarePreset": OrderedDict.OrderedDict([
+    ["product", "DMXIS"],
+    ["major", "1"],
+    ["minor", "2"],
+    ["patch", "0"],
+    ["algoname", "DMXIS"],
+  ]),
 
-  "Param": {
-    "v": "0.000000",
-    "cc": "-1",
-    "nrpn": "-1",
-    "ch": "0",
-  },
+  "Param": OrderedDict.OrderedDict([
+    ["v", "0.000000"],
+    ["cc", "-1"],
+    ["nrpn", "-1"],
+    ["ch", "0"],
+  ]),
 
-  "c": {
-    "t": "0",
-    "a": "0.500000",
-    "p": "0.000000",
-    "s": "7",
-    "tm": "10.000000",
-    "sh": "0.500000",
-    "i": "0",
-    "en": "1",
-    "fa": "1.000000",
-    "fr": "49.987503",
-    "fg": "0"
-    }
+  "c": OrderedDict.OrderedDict([
+    ["t", "0"],
+    ["a", "0.500000"],
+    ["p", "0.000000"],
+    ["s", "7"],
+    ["tm", "10.000000"],
+    ["sh", "0.500000"],
+    ["i", "0"],
+    ["en", "1"],
+    ["fa", "1.000000"],
+    ["fr", "49.987503"],
+    ["fg", "0"],
+    ])
   }
 
 DMX_NAMES = [str(i) for i in xrange(1, 513)]
