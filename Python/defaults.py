@@ -1,9 +1,9 @@
 #!/usr/local/bin/python
 
-import OrderedDict
+import collections
 
 PRESET_PARTS = {
-  "DbAudiowarePreset": OrderedDict.OrderedDict([
+  "DbAudiowarePreset": collections.OrderedDict([
     ["product", "DMXIS"],
     ["major", "1"],
     ["minor", "2"],
@@ -11,14 +11,14 @@ PRESET_PARTS = {
     ["algoname", "DMXIS"],
   ]),
 
-  "Param": OrderedDict.OrderedDict([
+  "Param": collections.OrderedDict([
     ["v", "0.000000"],
     ["cc", "-1"],
     ["nrpn", "-1"],
     ["ch", "0"],
   ]),
 
-  "c": OrderedDict.OrderedDict([
+  "c": collections.OrderedDict([
     ["t", "0"],
     ["a", "0.500000"],
     ["p", "0.000000"],
@@ -47,6 +47,9 @@ PARAM_SECOND = [
 
 PARAM_NAMES = PARAM_FIRST + DMX_NAMES + PARAM_SECOND
 
-def Get(theName, **kwds):
-  return dict(PRESET_PARTS[theName], **kwds)
+def Get(name, primary, secondary):
+  d = collections.OrderedDict(primary)
+  d.update(PRESET_PARTS[name])
+  d.update(secondary)
+  return d
 

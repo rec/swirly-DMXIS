@@ -1,5 +1,6 @@
 #!/usr/local/bin/python
 
+import collections
 import json
 import os.path
 import sys
@@ -7,19 +8,19 @@ import xml.dom.minidom
 
 import defaults
 
-def SetNodeValue(node, **kwds):
+def SetNodeValue(node, kwds):
   for k, v in kwds.iteritems():
     node.setAttribute(k, v)
 
-def CreateDocument(tag, **attributes):
+def CreateDocument(tag, attributes):
   impl = xml.dom.minidom.getDOMImplementation()
   document = impl.createDocument(None, tag, None)
-  SetNodeValue(document.documentElement, **attributes)
+  SetNodeValue(document.documentElement, attributes)
   return document
 
-def CreateElement(document, parent, tag, **attributes):
+def CreateElement(document, parent, tag, attributes={}):
   element = document.createElement(tag)
-  SetNodeValue(element, **attributes)
+  SetNodeValue(element, attributes)
   parent.appendChild(element)
   return element
 
@@ -29,14 +30,14 @@ def Print(document, output):
 def Add(document, names, data, tag, parent, nameField):
   sub = data[tag]
   for name in names:
-    d = dict(sub.get(name, {}))
-    d[nameField] = name
-    d = dict((str(k), v) for k, v in d.iteritems())
-    CreateElement(document, parent, tag, **defaults.Get(tag, **d))
+    d = sub.get(name, {})
+    d = collections.OrderedDict((str(k), v) for k, v in d.iteritems())
+    attributes = defaults.Get(tag, {nameField:name}, d)
+    CreateElement(document, parent, tag, attributes)
 
 def MakePreset(data, output):
-  d = defaults.Get('DbAudiowarePreset', name=data['name'])
-  document = CreateDocument('DbAudiowarePreset', **d)
+  d = defaults.Get('DbAudiowarePreset', dict(name=data['name']), {})
+  document = CreateDocument('DbAudiowarePreset', d)
   root = document.documentElement
   params = CreateElement(document, root, 'Params')
   dmx = CreateElement(document, root, 'DmxUniverse')
