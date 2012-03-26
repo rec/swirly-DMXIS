@@ -1,4 +1,4 @@
-<DbAudiowarePreset algoname="DMXIS" major="1" minor="2" name="Preset 1" patch="0" product="DMXIS">
+<DbAudiowarePreset algoname="DMXIS" major="1" minor="2" name="Test 1" patch="0" product="DMXIS">
   <Params>
     <Param cc="-1" ch="0" nm="X Value" nrpn="-1" v="0.000000"/>
     <Param cc="-1" ch="0" nm="Bank" nrpn="-1" v="0.022500"/>
