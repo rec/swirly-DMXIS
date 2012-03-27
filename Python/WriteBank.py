@@ -65,15 +65,6 @@ def WritePresetFile(name, data):
     WritePreset(name, data, output)
   return fname
 
-def WritePresets(bank):
-  presets = []
-  for name, subdata in bank.iteritems():
-    presets.append(fname)
-    with open(fname, 'w') as output:
-      MakePreset(name, subdata, output)
-
-  return presets
-
 def WriteBank(bankName):
   with open(bankName) as input:
     bank = json.load(input)
