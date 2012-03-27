@@ -1,5 +1,14 @@
 #!/usr/local/bin/python
 
+"""
+Write a bank of DMXIS presets given a much-simpler JSON description file.
+
+Usage:  WriteBank.py bank-desc.json.
+
+See the file test.json in this directory for more examples.
+
+"""
+
 import json
 import os.path
 import sys
@@ -50,14 +59,15 @@ def MakePreset(name, data, output):
 
   Print(root, output)
 
+def WriteBank(bank):
+  for name, subdata in bank.iteritems():
+    with open(name + '.xml', 'w') as output:
+      MakePreset(name, subdata, output)
+
 if __name__ == '__main__':
   if len(sys.argv) is 2:
     with open(sys.argv[1]) as input:
-      data = json.load(input)
-      for name, subdata in data.iteritems():
-        with open(name + '.xml', 'w') as output:
-          MakePreset(name, subdata, output)
-
+      WriteBank(json.load(input))
   else:
     print 'Usage: %s json-filename' % sys.argv[0]
     sys.exit(-1)
