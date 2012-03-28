@@ -4,7 +4,7 @@ import Default
 import Settings
 import Xml
 
-class Preset(obj):
+class Preset(object):
   BEFORE = [
     'X Value', 'Bank', 'Preset', 'PresetUp', 'PresetDown', 'ShowPresetPage',
     'BankUp', 'BankDown', 'NewPreset', 'DeletePreset', 'EditPreset', 'NewBank',
@@ -29,7 +29,7 @@ class Preset(obj):
   def Write(self):
     d = dict(Default.PRESET, name=self.name)
     self.document = Xml.CreateDocument('DbAudiowarePreset', d)
-    self.root = document.documentElement
+    self.root = self.document.documentElement
     self._Add(True)
     self._Add(False)
 
@@ -38,7 +38,7 @@ class Preset(obj):
   def _Add(self, isParam):
     self.element = self._Create(self.root, Preset.TOP_TAGS[isParam])
     self.name = Preset.NAMES[isParam]
-    self.tag = Preset.TAGS[self.isParam]
+    self.tag = Preset.TAGS[isParam]
 
     if isParam:
       self._AddSegment(Preset.BEFORE)
@@ -47,13 +47,13 @@ class Preset(obj):
     else:
       self._AddSegment(Preset.FADERS, lambda x: str(int(x) - 1))
 
-  def _AddSegment(self, faders, nameMaker=lamda x: x):
+  def _AddSegment(self, faders, nameMaker=lambda x: x):
     for fader in faders:
       if fader not in self.omit:
         attr = dict(Default.FADER)
         attr[self.name] = nameMaker(fader)
         attr.update(self.faderSettings.get(fader, {}))
-        attr = Settings.SelectAttributes(attr, self.tag)
+        attr = Settings.SelectAttributes(self.tag, attr)
         self._Create(self.element, self.name, attr)
 
   def _Create(self, parent, tagname, attr={}):

@@ -1,5 +1,7 @@
 #!/usr/local/bin/python
 
+import Settings
+
 PRESET = {
   'product': 'DMXIS',
   'major': '1',
