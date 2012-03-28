@@ -19,6 +19,5 @@ def CreateElement(document, parent, tag, attributes={}):
   parent.appendChild(element)
   return element
 
-def WriteXml(document, output):
+def Write(document, output):
   output.write(document.toprettyxml(indent='  '))
-

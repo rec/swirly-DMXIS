@@ -29,5 +29,3 @@ FADER = Settings.Translate(**{
 TEMPO = '120.000000'
 CROSSFADE = '0.000000'
 
-
-
