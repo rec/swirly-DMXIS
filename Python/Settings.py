@@ -61,4 +61,5 @@ def TranslateAll(faders):
   return dict((k, Translate(**v)) for k, v in faders.iteritems())
 
 def SelectAttributes(tagname, attr):
+  print tagname
   return dict((k, v) for k, v in attr.iteritems() if k in KEY_TYPES[tagname])
