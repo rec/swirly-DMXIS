@@ -29,7 +29,7 @@ def WriteBank(filename):
     Preset.Preset(preset).Write()
     Xml.CreateElement(document, root, 'Preset', PresetAttributes(preset))
 
-  output = Xml.WriteTo(document, bank['name'], '.xml')
+  output = Xml.WriteTo(document, 'bank', '.xml')
   output.write('<Tempo val="%s" />\n' % bank.get('tempo', '120.000000'))
 
 if __name__ == '__main__':

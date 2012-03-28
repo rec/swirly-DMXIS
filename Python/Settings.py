@@ -4,6 +4,7 @@
 
 KEY_NAMES = {
   "invert": "i",
+  "enable": "en",
 
   "level": "fg",
   "band": "ff",
@@ -22,7 +23,6 @@ KEY_NAMES = {
   "channel": "ch",
 
   # I'm not really sure what these symbols mean.
-  # "en": "en",
   # "nrpn": "nrpn",
   # "tm": "tm",
 }
@@ -40,11 +40,11 @@ def Translate(*args, **kwds):
   return [KEY_NAMES.get(k, k) for k in args]
 
 KEY_TYPES = {
-  'DmxUniverse': frozenset(Translate(*[
+  'c': frozenset(Translate(
     'amount', 'attack', 'dir', 'band', 'level', 'release', 'invert', 'chase',
-    'speed', 'shape', 'type', 'en', 'tm'])),
+    'speed', 'shape', 'type', 'enable', 'tm')),
 
-  'Params': frozenset(Translate(*['value', 'controller', 'channel', 'nprn']))
+  'Param': frozenset(Translate('value', 'controller', 'channel', 'nprn'))
 }
 
 # We want to name oscillator types as strings, not numbers.
@@ -61,5 +61,4 @@ def TranslateAll(faders):
   return dict((k, Translate(**v)) for k, v in faders.iteritems())
 
 def SelectAttributes(tagname, attr):
-  print tagname
   return dict((k, v) for k, v in attr.iteritems() if k in KEY_TYPES[tagname])

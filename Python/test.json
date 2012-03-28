@@ -1,9 +1,8 @@
 {
-  "name": "Test Bank",
   "tempo": "120.00000",
   "presets": [
     {
-      "name": "Test 1",
+      "name": "test-preset",
       "crossfade": "0.000000",
       "faders": {
         "4": {"value": "0.445000", "cc": "-76"},

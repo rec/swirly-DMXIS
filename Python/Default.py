@@ -13,6 +13,8 @@ PRESET = {
 FADER = Settings.Translate(**{
   'nrpn': '-1',
   'en': '1',
+  'band': '0',
+  'dir': '0',
   'level': '0',
   'speed': '7',
   'invert': '0',
@@ -26,6 +28,8 @@ FADER = Settings.Translate(**{
   'type': '0',
   'channel': '0',
   'chase': '0.000000',
+  'nprn': '-1',
+  'tm': '10.000000'
   })
 
 TEMPO = '120.000000'
