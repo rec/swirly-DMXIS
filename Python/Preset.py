@@ -24,15 +24,16 @@ class Preset(obj):
   def __init__(self, preset):
     self.omit = preset.get('omit', [])
     self.faderSettings = Settings.TranslateAll(preset.get('faders', {}))
+    self.name = preset['name']
 
-  def MakeDocument(self):
-    d = dict(Default.PRESET, name=preset['name'])
+  def Write(self):
+    d = dict(Default.PRESET, name=self.name)
     self.document = Xml.CreateDocument('DbAudiowarePreset', d)
     self.root = document.documentElement
     self._Add(True)
     self._Add(False)
 
-    return self.document
+    Xml.WriteTo(self.document, self.name, '.prt')
 
   def _Add(self, isParam):
     self.element = self._Create(self.root, Preset.TOP_TAGS[isParam])

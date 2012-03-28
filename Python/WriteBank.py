@@ -11,52 +11,31 @@ See the file test.json in this directory for more examples.
 
 # System imports.
 import json
-import os.path
 import sys
 
 # My imports.
-import Adder
-import Defaults
-import Settings
+import Preset
 import Xml
 
-def OpenFile(name, suffix='.xml', mode='w'):
-  if not name.endswith(suffix):
-    name += suffix
-  return open(name, mode)
+def PresetAttributes(p):
+  return dict(crossfade=p.get('crossfade', '0.000000'), name=p['name'])
 
-
-def WritePreset(bank):
-  name = bank['name']
-  d = dict(defaults.PRESET_DEFAULTS, name=name)
-  document = Xml.CreateDocument('DbAudiowarePreset', d)
-  root = document.documentElement
-
-  Params.Add(root, bank)
-  AddUniverse(root, bank)
-  WriteXml(root, OpenFile(name, '.prt'))
-
-
-def WriteBank(bank):
+def WriteBank(filename):
+  bank = json.load(open(filename))
   document = Xml.CreateDocument('Order')
   root = document.documentElement
-  with OpenFile(bank['name']) as output:
-    WriteXml(root, output)
-    output.write('<Tempo val="%s" />\n' % bank.get('tempo', '120.000000'))
 
-
-def WriteBankAndPresets(filename):
-  bank = json.load(open(filename))
   for preset in bank['presets']:
-    WritePreset(preset)
+    Preset.Preset(preset).Write()
+    Xml.CreateElement(document, root, 'Preset', PresetAttributes(preset))
 
-  WriteBank(bank)
-
+  output = Xml.WriteTo(document, bank['name'], '.xml')
+  output.write('<Tempo val="%s" />\n' % bank.get('tempo', '120.000000'))
 
 if __name__ == '__main__':
   if len(sys.argv) is not 2:
     print 'Usage: %s json-filename' % sys.argv[0]
     sys.exit(-1)
 
-  WriteBankAndPresets(sys.argv[1])
+  WriteBank(sys.argv[1])
 

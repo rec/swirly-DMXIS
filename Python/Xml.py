@@ -19,5 +19,12 @@ def CreateElement(document, parent, tag, attributes={}):
   parent.appendChild(element)
   return element
 
-def Write(document, output):
+def OpenFile(name, suffix, mode='w'):
+  if not name.endswith(suffix):
+    name += suffix
+  return open(name, mode)
+
+def WriteTo(document, name, suffix):
+  output = OpenFile(name, suffix)
   output.write(document.toprettyxml(indent='  '))
+  return output
