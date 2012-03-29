@@ -28,7 +28,7 @@ FADER = Settings.TranslateDict({
   'type': '0',
   'channel': '0',
   'chase': '0.000000',
-  'nprn': '-1',
+  'nrpn': '-1',
   'tm': '10.000000'
   })
 
