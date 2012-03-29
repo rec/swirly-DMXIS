@@ -10,7 +10,7 @@ PRESET = {
   'algoname': 'DMXIS',
   }
 
-FADER = Settings.Translate(**{
+FADER = Settings.TranslateDict({
   'nrpn': '-1',
   'en': '1',
   'band': '0',

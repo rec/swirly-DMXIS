@@ -1,8 +1,7 @@
 #!/usr/local/bin/python
 
-# We'd like long names for the very short names that ENTTEC uses.
-
-KEY_NAMES = {
+# SETTINGS maps human-readable names to the short names that ENTTEC uses.
+SETTINGS = {
   "invert": "i",
   "enable": "en",
 
@@ -27,38 +26,47 @@ KEY_NAMES = {
   # "tm": "tm",
 }
 
-def Translate(*args, **kwds):
-  """Translate a list or dictionary of items from the full names to ENTTEC's
-  internal names."""
-  if kwds:
-    if args:
-      raise Exception("Can't have both list and keyword arguments")
-    else:
-      return dict((KEY_NAMES.get(k, k), TranslateOsc(k, v))
-                  for k, v in kwds.iteritems())
+def ToMap(*args):
+  """Converts a list of values into a map from the value to its index.
+  Example:  ToMap('a', 'b', 'c') returns {'a': '0', 'b': '1', 'c': '2'}
+  """
+  return dict((v, str(i)) for i, v in enumerate(args))
 
-  return [KEY_NAMES.get(k, k) for k in args]
-
-KEY_TYPES = {
-  'c': frozenset(Translate(
-    'amount', 'attack', 'dir', 'band', 'level', 'release', 'invert', 'chase',
-    'speed', 'shape', 'type', 'enable', 'tm')),
-
-  'Param': frozenset(Translate('value', 'controller', 'channel', 'nprn'))
+# VALUES maps meaningful text names to the ENTTEC numeric values.
+VALUES = {
+  SETTINGS['dir']: ToMap('up', 'down'),
+  SETTINGS['band']: ToMap('sub', 'lo', 'mid', 'hi'),
+  SETTINGS['invert']: ToMap('off', 'on'),
+  SETTINGS['speed']: ToMap('1/16', '1/8', '3/16', '1/4', '3/8', '1/2', '3/4',
+                           '1', '2', '3', '4', '6', '8', '12', '16', '24', '32',
+                           '48', '64', '96', '128'),
+  SETTINGS['type']: ToMap('off', 'sine', 'square', 'triangle', 'saw up',
+                          'saw dn'),
 }
 
-# We want to name oscillator types as strings, not numbers.
+def TranslateKeyValue(key, value):
+  """Translate a key, value pair from human-readable form to ENTTEC's data
+  format."""
+  key = SETTINGS.get(key, key)
+  value = VALUES.get(key, {}).get(value, value)
+  return key, value
 
-OSCILLATOR_TYPES = ['off', 'sine', 'square', 'triangle', 'saw up', 'saw dn']
-OSCILLATOR_MAP = dict((x, i) for i, x in enumerate(OSCILLATOR_TYPES))
+def TranslateDict(d):
+  """Translate dictionary of items from the full names to ENTTEC's internal data
+  format."""
 
-def TranslateOsc(k, v):
-  return v if k != OSCILLATOR_TYPE_KEY else OSCILLATOR_MAP.get(v, v)
+  return dict(TranslateKeyValue(k, v) for  k, v in d.iteritems())
 
-OSCILLATOR_TYPE_KEY = Translate('type')[0]
+def TranslateList(*items):
+    return [SETTINGS.get(k, k) for k in items]
 
-def TranslateAll(faders):
-  return dict((k, Translate(**v)) for k, v in faders.iteritems())
+ATTRIBUTES = {
+  'c': TranslateList(
+    'amount', 'attack', 'dir', 'band', 'level', 'release', 'invert', 'chase',
+    'speed', 'shape', 'type', 'enable', 'tm'),
+
+  'Param': TranslateList('value', 'controller', 'channel', 'nprn')
+}
 
 def SelectAttributes(tagname, attr):
-  return dict((k, v) for k, v in attr.iteritems() if k in KEY_TYPES[tagname])
+  return dict((k, v) for k, v in attr.iteritems() if k in ATTRIBUTES[tagname])

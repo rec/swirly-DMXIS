@@ -23,7 +23,11 @@ class Preset(object):
 
   def __init__(self, preset):
     self.omit = preset.get('omit', [])
-    self.faderSettings = Settings.TranslateAll(preset.get('faders', {}))
+    faders = preset.get('faders', {})
+
+    # Translate the dictionary for each fader.
+    tr = Settings.TranslateDict
+    self.settings = dict((k, tr(v)) for k, v in faders.iteritems())
     self.name = preset['name']
 
   def Write(self):
@@ -32,7 +36,6 @@ class Preset(object):
     self.root = self.document.documentElement
     self._Add(True)
     self._Add(False)
-
     Xml.WriteTo(self.document, self.name, '.prt')
 
   def _Add(self, isParam):
@@ -52,7 +55,7 @@ class Preset(object):
       if fader not in self.omit:
         fader = nameMaker(fader)
         attr = dict(Default.FADER)
-        attr.update(self.faderSettings.get(fader, {}))
+        attr.update(self.settings.get(fader, {}))
         attr = Settings.SelectAttributes(self.tag, attr)
         attr[self.attrName] = fader
         self._Create(self.element, self.tag, attr)
