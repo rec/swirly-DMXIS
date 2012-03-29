@@ -5,13 +5,22 @@ Write a bank of DMXIS presets given a much-simpler JSON description file.
 
 Usage:  WriteBank.py bank-desc.json.
 
-See the file test.json in this directory for more examples.
+See the file test.json in this directory for another example.
 
 """
 
 # System imports.
-import json
 import sys
+
+# Try to import the YAML parser, else fall back to JSON.
+try:
+  import yaml
+  Load = yaml.load
+
+except ImportError:
+  import json
+
+  Load = json.load
 
 # My imports.
 import Preset
@@ -21,7 +30,7 @@ def PresetAttributes(p):
   return dict(crossfade=p.get('crossfade', '0.000000'), name=p['name'])
 
 def WriteBank(filename):
-  bank = json.load(open(filename))
+  bank = Load(open(filename))
   document = Xml.CreateDocument('Order')
   root = document.documentElement
 

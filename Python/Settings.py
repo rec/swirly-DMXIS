@@ -55,6 +55,7 @@ def TranslateKeyValue(key, value):
   if key not in SETTINGS_INVERSE:
     raise Exception("Didn't understand key %s" % key)
 
+  value = str(value)
   valueMap = VALUES.get(key, {})
   if valueMap:
     value = valueMap.get(value, value)

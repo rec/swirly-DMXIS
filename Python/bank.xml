@@ -1,5 +1,6 @@
 <?xml version="1.0" ?>
 <Order>
-  <Preset crossfade="0.000000" name="test-preset"/>
+  <Preset crossfade="0.000000" name="test1"/>
+  <Preset crossfade="20.000000," name="test2"/>
 </Order>
-<Tempo val="120.00000" />
+<Tempo val="120.0" />

@@ -1,0 +1,36 @@
+Python DMXIS Bank Writer Utility.
+
+Copyright (c) 2012, Tom Swirly
+
+Released under the I Don't Care License - I don't care what you do with this as
+long as you don't bother me or prevent me or others from using it freely.
+
+Note that this software is NOT GUARANTEED OR WARANTEED FOR ANY PURPOSE.
+If this blows up your lighting gear or sets your DMXIS box on fire, causes
+data loss or malfunctions in any way at all, I AM NOT LIABLE OR RESPONSIBLE.
+
+
+This is a little Python utility to write banks of data for the ENTTEC DMXIS DMX
+lighting controller.  I've tested it with Python 2.6 and Python 2.7.
+
+It provides two services:  it allows you to only specify that values that aren't
+defaults, and it also allows you to specify human-readable names and values.
+
+
+To execute the program, type
+
+  python WriteBank.py yourBank.json
+
+where yourBank.json is a data file that you've created to describe your bank and
+its presets.  The data file can be in JSON format, or if you have installed the
+Python YAML package PyYAML, the program will also read YAML files.
+
+There are two example data files in this directory, test.json and test.yaml,
+which give identical results:  the three files bank.xml, test1.prt and test2.prt.
+
+
+Please don't hesitate to contact me if you need any help getting this program
+set up and I'll incorporate the results into the next version of this document.
+
+
+Tom Swirly - tom@swirly.com
